@@ -6,6 +6,7 @@ public class ChecklistGoal : Goal
     private int _target;
     private int _bonus;
 
+    // Constructor for a brand new checklist goal
     public ChecklistGoal(string name, string description, int points, int target, int bonus) : base(name, description, points)
     {
         _amountCompleted = 0;
@@ -13,27 +14,44 @@ public class ChecklistGoal : Goal
         _bonus = bonus;
     }
 
-    public override void RecordEvent()
+    // Constructor for loading a checklist goal from a file
+    public ChecklistGoal(string name, string description, int points, int bonus, int target, int amountCompleted) : base(name, description, points)
     {
-        // Stub
+        _amountCompleted = amountCompleted;
+        _target = target;
+        _bonus = bonus;
+    }
+
+    public override int RecordEvent()
+    {
+        if (_amountCompleted < _target)
+        {
+            _amountCompleted++;
+            
+            // If they just hit the target, give standard points + bonus
+            if (_amountCompleted == _target)
+            {
+                return _points + _bonus;
+            }
+            // Otherwise just give standard points
+            return _points;
+        }
+        return 0;
     }
 
     public override bool IsComplete()
     {
-        // Stub
-        return false;
+        return _amountCompleted >= _target;
     }
 
     public override string GetDetailsString()
     {
-        // We override this specific method to add the progress tracker (e.g., -- Currently completed: 2/5)
         string checkbox = IsComplete() ? "[X]" : "[ ]";
         return $"{checkbox} {_shortName} ({_description}) -- Currently completed: {_amountCompleted}/{_target}";
     }
 
     public override string GetStringRepresentation()
     {
-        // Stub
-        return "";
+        return $"ChecklistGoal:{_shortName},{_description},{_points},{_bonus},{_target},{_amountCompleted}";
     }
 }

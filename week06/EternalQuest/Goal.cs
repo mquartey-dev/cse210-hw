@@ -13,16 +13,20 @@ public abstract class Goal
         _points = points;
     }
 
-    // Abstract methods have no body and MUST be overridden by child classes
-    public abstract void RecordEvent();
+    // Abstract methods force the child classes to define their own specific logic
+    public abstract int RecordEvent();
     public abstract bool IsComplete();
     public abstract string GetStringRepresentation();
 
-    // Virtual methods provide a default that CAN be overridden if needed
+    // Virtual method provides a default format but allows overriding if needed
     public virtual string GetDetailsString()
     {
-        // Check if the goal is complete, and use an X or a blank space
         string checkbox = IsComplete() ? "[X]" : "[ ]";
         return $"{checkbox} {_shortName} ({_description})";
+    }
+
+    public string GetName()
+    {
+        return _shortName;
     }
 }
