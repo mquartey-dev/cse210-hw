@@ -9,6 +9,8 @@ class Program
         Cycling cyclingAct = new Cycling("04 Nov 2022", 45, 15.0);
         Swimming swimmingAct = new Swimming("05 Nov 2022", 20, 40);
 
+        // Use a polymorphic list of the base type Activity so each derived
+        // activity type can be stored together and summarized uniformly.
         List<Activity> activities = new List<Activity>();
         activities.Add(runningAct);
         activities.Add(cyclingAct);
